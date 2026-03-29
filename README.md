@@ -3,3 +3,9 @@ Es aplicación sencilla e intuitiva para convertir de dólar a euro o dice versa
 
 En el Activity usamos binding para obtener los componentes de la view y pusimos lógica de interfaz, por ejemplo al apretar un radio button se activan y desactivan determinados campos.
 para la lógica de conversión se llaman a métodos del viewModel que también guarda el valor de conversión.
+
+Integrantes del grupo:
+* Walter Alexander Vertacnik 46260391
+* Stefani Nair Escobar 38752519
+* Valentino Coppola 47040879
+* Jeremías Sosa 39797677
