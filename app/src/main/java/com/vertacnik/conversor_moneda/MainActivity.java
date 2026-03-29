@@ -4,6 +4,8 @@ import static android.app.ProgressDialog.show;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -55,46 +57,17 @@ public class MainActivity extends AppCompatActivity {
             );
         });
 
-        // Al apretar el boton de convertir ve que radio button está seleccionado para convertir de dólar a euro o euro a dólar
+        // Al apretar el botón convertir llama al método del model convertir y les pasamos los componentes que requiere
         binding.btConvertir.setOnClickListener(v -> {
-            if (binding.rbDolar.isChecked()) {
-                // Verificamos que el campo de euro no esté vacío
-                if (binding.etEuro.getText().toString().isEmpty()) {
-                    Toast.makeText(this, "El campo de euro está vacío", Toast.LENGTH_LONG).show();
-                    return;
-                }
-                // Seteamos el valor de conversion en el otro campo
-                binding.etDolar.setText(
-                        String.valueOf(
-                                 Double.parseDouble(binding.etEuro.getText().toString()) * 1/viewModel.getUnidadDeCambio().getValue()
-                        )
-                );
-            }
-            if (binding.rbEuro.isChecked()) {
-                // Verificamos que el campo de dólar no esté vacío
-                if (binding.etEuro.getText().toString().isEmpty()) {
-                    Toast.makeText(this, "El campo de dólar está vacío", Toast.LENGTH_LONG).show();
-                    return;
-                }
-                // Seteamos el valor de conversion en el otro campo
-                binding.etEuro.setText(
-                        String.valueOf(
-                                Double.parseDouble(binding.etDolar.getText().toString()) * viewModel.getUnidadDeCambio().getValue()
-                        )
-                );
-            }
+            viewModel.convertir(
+                    binding.rbDolar, binding.etEuro, binding.etDolar, binding.rbEuro
+            );
         });
 
         // Al apretar el botón de Cambiar valor, se guarda el valor en el model que se haya ingresado en el campo de etUnidad y control de errores (campo vacío o valor nulo o negativo)
         binding.btCambiarValor.setOnClickListener(v -> {
-            if (binding.etUnidad.getText().toString().isEmpty()) {
-                Toast.makeText(this, "El campo de valor de conversión no puede estar vacío", Toast.LENGTH_LONG).show();
-                return;
-            }
-            if (Double.parseDouble(binding.etUnidad.getText().toString()) <= 0) {
-                Toast.makeText(this, "El campo de valor de conversión no puede ser 0 o negativo", Toast.LENGTH_LONG).show();
-                return;
-            }
+            viewModel.controlDeValorDeConversion(binding.etUnidad);
+
             // guarda en el viewModel el valor
             viewModel.setUnidadDeCambio(Double.parseDouble(binding.etUnidad.getText().toString()), binding.rbEuro.isChecked());
         });
